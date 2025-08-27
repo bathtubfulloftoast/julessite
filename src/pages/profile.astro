@@ -1,0 +1,198 @@
+---
+
+import "xp.css/dist/XP.css";
+import '/src/styles/userpage.css';
+import '/src/styles/colors.css';
+
+import links from '/src/assets/links.json';
+const badges = links[0] ?? [];
+const stamps = links[1] ?? [];
+const socials = links[2] ?? [];
+
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+
+---
+<head>
+<title>JULES Profile</title>
+<meta name="viewport" content="width=device-width">
+<meta charset="UTF-8" />
+</head>
+
+<div class="top">
+<img fetchPriority="high" id="pfp" src="/media/pfp.png">
+
+<span id="username">JULES</span><br>
+<span id="status"><i style="color:var(--fg3)">away message:</i> its all about the JULES.</span><br>
+
+<span id="creationdate">Account Created: 09/11/2012</span><br><br>
+
+<div><img fetchPriority="low" id="onlineimg" src="/blank.gif" class="sprite offline">
+<span id="online">Offline</span>
+
+<img fetchPriority="low" src="/blank.gif" class="sprite friend">
+<a id="addfriend" href="/media/secrets/g dance.mp4" target="_blank">Add Friend</a>
+</div>
+</div>
+
+<div class="bottom">
+<div class="interests">
+<b>Interests</b><br><br>
+
+General:<br>
+JULES (hmu)
+<br><br>
+
+Recent Music:<br>
+<span id="recentsongs">
+I WANT TO jules
+<br>
+</span>
+<br>
+
+Current Fav Music:<br>
+<span id="topsongs">
+BEFORE I jules IN PLEASE TELL MY jules I LOVE jules I LOVE jules I DONT WANT TO DIE PLEASE ALSO SO I DONT GET SUED THIS IS POWERED BY LAST.FM
+<br>
+</span>
+<br>
+
+Fav Games:<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules
+<br><br>
+
+Fav Movies:<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules
+<br><br>
+
+Fav Shows:<br>
+jules<br>
+jules<br>
+jules<br>
+jules<br>
+jules
+<br><br>
+
+Socials:<br>
+{socials
+.filter(item => !item.adult)
+.map(item => (
+<a title={item.title} href={item.url} target="_blank">{item.title}</a><br>
+))}
+</div>
+
+<div class="blurbs">
+
+<div class="blurb">
+<b>About Me:</b><br>
+hey there, im JU/LES and im an 100 old JULES<br>
+i enjoy JULESy<br>
+this site is entirely self JULES, you can find the source on <a target="_top" href="https://git.gay/bathtubfulloftoast/julessite/">git.gay</a>
+</div>
+
+<div class="blurb">
+<b>Latest Blog Posts:</b><br>
+{
+posts
+.filter(posts => !posts.hidden)
+.slice(0,5)
+.map((post) => (
+<a href={`/blog/${post.id}/`} target="blank">{post.data.title}</a><br>
+))
+}
+</div>
+
+<div class="blurb">
+<b>More of Me:</b><br>
+so alongside this site i run a <a href="//wiki.novassite.net/Shitzing" target="_top">wiki for my JULES</a> i also have <a href="//wiki.novassite.net/Shitzing" target="_top">a few other random JULES</a> alongside a <a href="//wiki.novassite.net/Shitzing" target="_top">JULES</a> oh and to make this site work so closely with <a href="https://discord.gg/DpxfUFRGxm" target="_top">my JULES</a> it runs as <a href="/discord/bot" target="_top">a JULES</a> so check either of those out if you'd like!
+</div>
+
+<div class="blurb">
+<b>Last.fm Stats:</b><br>
+<span id="fmstats">9999 total scrobbles<br>
+im only 1 more till 10000!<br>
+thats around 3 minutes worth of music...<br>
+itl take about 3 minutes to reach my goal<br>
+(with an average of 20000 songs per day)</span>
+</div>
+
+<div id="activities"></div>
+
+<div class="blurb">
+<b>JULES:</b><br>
+<img fetchPriority="low" src="/media/stamps/stamp.png" height="100px" width="400px">
+</div>
+
+<div class="blurb">
+<b>Badges:</b><br><br>
+<div class="badges">
+<section id="badges">
+    {badges.map((item) => (
+        <a title={item.title} href={item.url} target="_blank">
+            <img decoding="async" loading="lazy" fetchPriority="low" id={item.id} src={`/media/badges/${item.source}`} alt={item.title} />
+        </a>
+    ))}
+</section>
+</div>
+</div>
+
+<div class="blurb">
+<b>Stamps:</b><br><br>
+<div class="badges">
+<section id="stamps">
+    {stamps.map((item) => (
+        <a title={item.title} href={item.url} target="_blank">
+            <img decoding="async" loading="lazy" fetchPriority="low" id={item.id} src={`/media/stamps/${item.source}`} alt={item.title} />
+        </a>
+    ))}
+</section>
+</div>
+</div>
+
+<div class="blurb">
+<b>System Info:</b><br>
+compiled on JULES<br>
+compiled with JULES<br>
+</div>
+
+
+</div>
+
+</div>
+
+<script src="/src/scripts/discordprofile.js"></script>
+<script src="/src/scripts/topfm.js"></script>
+<script src="/src/scripts/recentfm.js"></script>
+<script src="/src/scripts/randomsite.js"></script>
+<script src="/src/scripts/oneko.js"></script>
+<script src="/src/scripts/steamrecent.js"></script>
+<script src="/src/scripts/fmbackup.js"></script>
+
+

@@ -1,49 +1,207 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
----
+import "xp.css/dist/XP.css";
+import '/src/styles/desktop.css';
+import '/src/styles/colors.css';
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+import desktop from '/src/assets/desktop.json';
+const icons = desktop;
+
+---
+<head>
+<title>JULESDesktop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico">
+<meta name="generator" content={Astro.generator} />
+<meta content="JULES Site" property="og:title" />
+<meta content="JUKES Desktop, free for all to see!" property="og:description" />
+<meta content="/media/embeds/main.png" property="og:image" />
+<meta content="#ff00ff" data-react-helmet="true" name="theme-color" />
+<meta charset="UTF-8" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://julessite.net/blog/rss.xml">
+</head>
+
+
+<div class="center-screen"  >
+<div style="display:inline-block;z-index:5;padding:0px;margin:0px" id="window">
+  <div class="title-bar">
+    <div class="title-bar-text"><img fetchPriority="low" src="/media/retro.png" height="16px" style="vertical-align: text-top;"> <span>JULES's Profile</span></div>
+    <div class="title-bar-controls">
+      <button style="cursor:pointer" aria-label="Minimize" onclick="location.href='/death';"></button>
+      <button style="cursor:pointer" aria-label="Maximize" onclick="location.href='/profile';"></button>
+      <button style="cursor:pointer" aria-label="Close" onclick='document.getElementById("window").remove()'></button>
+    </div>
+  </div>
+  <div style="padding:0px;margin:0px">
+<iframe style="padding:0px;margin:0px;border-left:1px solid #0831d9;border-top:none;border-right:1px solid #001ea0;border-bottom:2px solid #001ea0;background:#ece9d8" src="/profile" width="800px" height="600px;" frameBorder="" id="novasprofile"></iframe>
+</div>
+</div>
+</div>
+
+<div class="bnuy"></div>
+
+<div class="icons">
+{icons
+.filter(item => !item.hidden)
+.map((item) => (
+<div class="icon" id={item.id}>
+<img fetchPriority="low" src={`/media/icons/${item.icon}`} alt={item.filename} /><br>
+<span>{item.filename}</span>
+</div>
+))}
+</div>
+
+<div class="taskbar">
+<div style="float:left"><a id="start" style="cursor:pointer;"><img fetchPriority="low" src="/media/start.gif"></a></div> <!-- no href because it adds select box -->
+
+<div class="time" id="time">11:24 PM</div>
+<div class="time"><a href="/media/secrets/clouds.mp4" id="wlnk" title="22&deg;C" target="_blank" ><img fetchPriority="low" src="/media/weather/16/03d.png" id="wimg" style="vertical-align: -2px;"> <span id="wtmp">72&deg;F</span></a></div>
+
+<!-- <div class="time" style="width:40px"><img id="battery" class="battery" src="/blank.gif"></div> -->
+
+</div>
+
+<span style="background:#fff">welcome to boundary break where we basically take the camera anywhere we want</span><br>
+<video src="/media/secrets/electroricardo.mp4" preload="none" controls></video>
+<br>
+watch as hit star ricardo milos does a funny dance with a funnier backing track!<br>
+there is nothing else about this video worth mentioning<br>
+also if youre on mobile youre a cheater how dare you<br>
+edit your browsers css like the desktop users you CHEATER
+
+<!--<div id="loadingImg" style="background:#000;color:#fff;position:absolute;left:0;top:0;width:100vw;height:100vh;z-index:200;display:flex;align-items:center;text-align:center;justify-content:center;"><img style="width:35vh;image-rendering: pixelated;opacity:0;" fetchPriority="high" src="/media/loading.webp" id="sickassloadingimage"></div>-->
+
+
+<script src="/src/scripts/icons/nova.js"></script>
+<script src="/src/scripts/icons/jules.js"></script>
+<script src="/src/scripts/icons/creekflow.js"></script>
+
+
+
+<script>
+let now = new Date();
+let hours = now.getHours();
+let minutes = now.getMinutes();
+let ampm = hours >= 12 ? 'PM' : 'AM';
+
+hours = hours % 12;
+hours = hours ? hours : 12;
+
+minutes = minutes < 10 ? '0' + minutes : minutes;
+
+document.getElementById("time").innerHTML = `${hours}:${minutes} ${ampm}`;
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+const width = window.outerWidth;
+let hash = window.location.hash;
+let hashValue = hash.substring(1);
+
+if (width<1500) {
+if (hashValue !== "fromtree") {
+window.location.replace("/tree#warn");
+}
+}
+// pulling a yandev lol
+});
+</script>
+
+<script>
+
+const audioUrl = "/media/sfx/fart.ogg";
+
+
+let audioBlobUrl = null;
+
+
+async function fetchBlob(url) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+}
+
+async function preloadBlobs() {
+    audioBlobUrl = await fetchBlob(audioUrl);
+}
+
+preloadBlobs();
+
+async function createaudio() {
+
+    const audioBlobUrl = await fetchBlob(audioUrl);
+
+    const audioElement = document.createElement('audio');
+    audioElement.src = audioBlobUrl;
+    audioElement.volume = 0.2;
+    audioElement.id = "shartmenu";
+
+
+    document.body.appendChild(audioElement);
+
+
+    audioElement.play();
+
+audioElement.addEventListener('ended', (event) => {
+audioElement.remove();
+});
+
+};
+
+document.getElementById("start").addEventListener("click", function(event) {
+event.preventDefault();
+if(!document.getElementById("shartmenu")) {
+createaudio(); //ive removed the ability to spam im sorgy.
+}
+});
+
+</script>
+
+<!--<script>
+const loadimg = document.getElementById("sickassloadingimage"); // the name is only so long because its funny and wont be obfuscated on compile
+
+const profilepage = document.getElementById("novasprofile");
+
+async function weather() {
+    const response = await fetch('/ping',{method: "POST"});
+
+    const audioElement = document.createElement('audio');
+    audioElement.src = "/media/sfx/vistabeta.ogg";
+    audioElement.volume = 1;
+    audioElement.fetchPriority = "high";
+
+    document.body.appendChild(audioElement);
+
+audioElement.addEventListener('ended', (event) => {
+audioElement.remove();
+});
+
+    if (response.ok) {
+    await new Promise(r => setTimeout(r, 5000));
+    document.getElementById("loadingImg").style.opacity = 0;
+    document.getElementById("loadingImg").style.pointerEvents = "none";
+    document.getElementById("loadingImg").style.transition = "opacity 2s ease-in-out";
+    audioElement.play();
+
+    await new Promise(r => setTimeout(r, 2000));
+    document.getElementById("loadingImg").remove();
+
+    }
+    else if (response.status == 404) {
+    document.getElementById("loadingImg").remove();
+    } else {
+    document.getElementById("loadingImg").innerHTML = `<div><h1>HTTP error code ${response.status}</h1><br><h2>exiting in 5 seconds.</h2></div>`;
+    await new Promise(r => setTimeout(r, 5000));
+    document.getElementById("loadingImg").remove();
+    console.log("ping wasnt 200 or 404 dumping response.");
+    console.log(response);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+loadimg.className = "fadein";
+loadimg.style.opacity = "1";
+weather()
+});
+
+</script>-->
+
