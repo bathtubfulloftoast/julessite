@@ -97,16 +97,15 @@ history.replaceState('', '', '/tree');
 <script>
 document.addEventListener("DOMContentLoaded", async function() {
 
-const response = await fetch('/api/discord');
+const response = await fetch('/.netlify/functions/discord');
 // const response = await fetch('/discord.json');
 // const response = await fetch('/ass.json');
 
 let data = await response.json();
 
-const nickname = data.nickname;
+const nickname = data.global_name;
 const avatarid = data.avatar;
 const userid = data.id;
-const onlinestatus = data.status;
 const accent = data.accentColor;
 
 var coverimage = document.getElementById("pfp");
@@ -120,13 +119,6 @@ if(nickname) {
 document.getElementById("name").innerHTML = nickname;
 }
 
-for (var item of data.activities) {
-if (item.type == 4) {
-if (item.state) {
-document.getElementById("splash").innerHTML = "&quot;"+item.state+"&quot;";
-break;
-}}}
-
 coverimage.style.border = "5px solid var(--bg2)";
 
 if(accent) {
@@ -135,13 +127,6 @@ coverimage.style.backgroundColor = "#"+accent.toString(16).padStart(6, "0");
 coverimage.style.backgroundColor = "var(--bg3)";
 }
 
-if (onlinestatus == "online") {
-coverimage.style.borderColor = "var(--green)";
-} else if (onlinestatus == "idle") {
-coverimage.style.borderColor = "var(--yellow)";
-} else if (onlinestatus == "dnd") {
-coverimage.style.borderColor = "var(--red)";
-}
 
 });
 

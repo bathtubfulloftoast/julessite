@@ -56,7 +56,7 @@ this rant is over and stupid and im so fucking mad
 }
 
 async function grabdiscord() {
-const response = await fetch('/api/discord');
+const response = await fetch('/.netlify/functions/discord');
 // const response = await fetch('/discord.json');
 
 let data = await response.json();
@@ -64,7 +64,7 @@ let data = await response.json();
 var now = new Date().getTime();
 
 
-const nickname = data.nickname;
+const nickname = data.global_name;
 const username = data.username;
 
 const userid = data.id;
@@ -73,162 +73,13 @@ const bannerid = data.banner;
 const onlinestatus = data.status;
 const accent = data.accentColor;
 
-const creationdate = new Date(data.creationtime);
-var day = String(creationdate.getDate()).padStart(2, '0');
-var month = String(creationdate.getMonth() + 1).padStart(2, '0');
-var year = creationdate.getFullYear();
 
-for (var item of data.activities) {
-if (item.type == 4) {
-if(item.emoji.imageURL) {
-document.getElementById("status").innerHTML = `<img src="${item.emoji.imageURL}?size=16" class="statusemoji"> ${item.state??""}`;
-} else if (!item.emoji.imageURL && item.emoji.name) {
-document.getElementById("status").innerHTML = `<span class="emoji">${item.emoji.name}</span> ${item.state??""}`
-} else {
-document.getElementById("status").innerHTML = item.state;
-}
-break;
-}
-}
 
 const activitylist = document.getElementById("activities");
 activitylist.innerHTML = "";
 
-
-for (const item of data.activities) {
-if (item.type !== 4) {
-const createdTime = new Date(item.createdTimestamp);
-const startTime = item.timestamps?.start
-? new Date(item.timestamps.start)
-: null;
-const endTime = item.timestamps?.end
-? new Date(item.timestamps.end)
-: null;
-
-const lareimg = item.assets?.largeImage??"null";
-
-let shareurl = "";
-const syncid = item.syncId;
-if(item.name == "Spotify") {
-shareurl = `https://open.spotify.com/track/${syncid}`;
-}
-// this code is shit lol
-
-
-const blurbwrap = document.createElement("div");
-blurbwrap.className = "blurb";
-
-const infowrap = document.createElement("div");
-infowrap.className = "infowrap";
-
-const activitytype = document.createElement("b");
-activitytype.innerHTML = `${item.name}:<br>`;
-
-const activityinfo = document.createElement("span");
-if (shareurl) {
-activityinfo.innerHTML = `<a href="${shareurl}" target="_top">${item.details || ""}<br>${item.state || ""}</a><br>`;
-// if else my beloved
-} else {
-activityinfo.innerHTML = `${item.details || ""}<br>${item.state || ""}<br>`;
-}
-
-const activitytime = document.createElement("span");
-
-function updateActivityTime() {
-const now = new Date();
-const distance = now - createdTime;
-
-const ph = Math.floor(distance / (1000 * 60 * 60));
-const pm = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const ps = Math.floor((distance % (1000 * 60)) / 1000);
-
-const timepassed = `${ph}h ${pm}m ${ps}s`;
-
-if (endTime) {
-    const legnth = endTime - startTime;
-    let current = now - startTime;
-
-    if (current > legnth) {
-        current = legnth;
-    }
-
-    const lh = String(
-        Math.floor(legnth / (1000 * 60 * 60))
-    ).padStart(2, "0");
-    const lm = String(
-        Math.floor((legnth % (1000 * 60 * 60)) / (1000 * 60))
-    ).padStart(2, "0");
-    const ls = String(
-        Math.floor((legnth % (1000 * 60)) / 1000)
-    ).padStart(2, "0");
-
-    const ch = String(
-        Math.floor(current / (1000 * 60 * 60))
-    ).padStart(2, "0");
-    const cm = String(
-        Math.floor((current % (1000 * 60 * 60)) / (1000 * 60))
-    ).padStart(2, "0");
-    const cs = String(
-        Math.floor((current % (1000 * 60)) / 1000)
-    ).padStart(2, "0");
-
-    const ctime = lh === "00" ? `${cm}:${cs}` : `${ch}:${cm}:${cs}`;
-    const ltime = lh === "00" ? `${lm}:${ls}` : `${lh}:${lm}:${ls}`;
-
-activitytime.innerHTML = `<progress style="width:300px" value="${current}" max="${legnth}"></progress><br>${ctime} - ${ltime}`;
-} else {
-    activitytime.innerHTML = timepassed;
-}
-}
-
-updateActivityTime();
-setInterval(updateActivityTime, 1000);
-
-
-if(lareimg) {
-const activityimg = document.createElement('img');
-
-if(lareimg.startsWith("spotify:")) {
-const spotifysplit = lareimg.split(":", 2);
-activityimg.src = `https://i.scdn.co/image/`+spotifysplit[1];
-
-} else if(lareimg.startsWith("mp:external/")) {
-const spotifysplit = lareimg.split("mp:external/", 2);
-activityimg.src = `https://media.discordapp.net/external/`+spotifysplit[1];
-} else {
-activityimg.src = `https://cdn.discordapp.com/app-assets/${item.applicationId}/${lareimg}.png?size=256`;
-}
-activityimg.className = "activityimg";
-
-if (item.assets) {
-activityimg.title = item.assets.largeText ?? "a discord activity";
-} else {
-activityimg.title = "a discord activity";
-}
-
-infowrap.appendChild(activityimg);
-
-activityimg.onerror = function () {
-activityimg.src = '/media/missing_activity.webp';
-};
-
-}
-
-
-blurbwrap.appendChild(activitytype);
-infowrap.appendChild(activityinfo);
-activityinfo.appendChild(activitytime);
-
-activitylist.appendChild(blurbwrap);
-blurbwrap.appendChild(infowrap);
-
-}
-}
-
 document.getElementById("username").innerHTML = wrapEmojis(nickname);
 document.getElementById("username").title = `${username} on discord`;
-
-document.getElementById("creationdate").innerHTML = `Account Created: ${month}/${day}/${year}`;
 
 
 

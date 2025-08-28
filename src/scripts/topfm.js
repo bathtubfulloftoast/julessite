@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
 
 async function weather() {
-    const response = await fetch('/api/fm-top');
+    const response = await fetch('/.netlify/functions/fmtop');
     let data = await response.json();
 
 
