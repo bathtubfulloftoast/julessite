@@ -5,7 +5,7 @@ let cache = {};
 export async function handler(event, context) {
     const API_KEY = process.env.DISCORD_API_KEY;
     const userid = process.env.PRESENCE_USERID;
-    const CACHE_DURATION = 86400000;
+    const CACHE_DURATION = 60000;
 
     if (cache && (Date.now() - cache.timestamp < CACHE_DURATION)) {
         const remainingTime = CACHE_DURATION - (Date.now() - cache.timestamp);
