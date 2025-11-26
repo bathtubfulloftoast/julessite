@@ -1,4 +1,4 @@
 document.getElementById("jules").addEventListener("click", function(event) {
 event.preventDefault();
-window.open("https://thatponyjules.neocities.org/", '_blank');
+window.open("https://thatponyjules.nekoweb.org", '_blank');
 })
